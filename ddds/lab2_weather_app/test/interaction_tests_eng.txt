@@ -1,0 +1,78 @@
+--- main menu
+S> Hello! What would you like to do?
+
+--- incremental, Temp
+U> I want to know the temperature
+S> What city?
+U> Paris
+S> What country?
+U> France
+S> The temperature is * degrees.
+
+--- one-shot, Temp
+U> What is the temperature in Paris France
+S> The temperature is * degrees.
+
+--- overanswering, Temp
+U> Can you tell me about the temperature
+S> What city?
+U> Paris France
+S> The temperature is * degrees.
+
+--- otheranswering, Temp
+U> Can you tell me about the temperature
+S> What city?
+U> France
+S> What city?
+U> Paris 
+S> The temperature is * degrees.
+
+--- Answer-revision, Temp
+U> Can you tell me about the temperature
+S> What city?
+U> Paris
+S> What country?
+U> Marseille
+S> What country?
+U> France
+S> The temperature is * degrees.
+
+--- incremental, Weather
+U> I want to know the weather
+S> What city?
+U> Paris
+S> What country?
+U> France
+S> The weather is *.
+
+--- overanswering, Weather
+U> I want to know the weather
+S> What city?
+U> Paris France
+S> The weather is *.
+
+--- one-shot, Weather
+U> What is the weather in Paris France
+S> The weather is *.
+
+--- metric, Temp
+U> What is the temperature in London UK in farenheit
+S> The temperature is * degrees.
+
+--- polite, incremental, Temp
+U> I want to know the temperature please
+S> What city?
+U> Paris thanks
+S> What country?
+U> France I guess
+S> The temperature is * degrees.
+
+--- reordered, added function words, one-shot, Weather
+U> In Paris in France what is the weather
+S> The weather is *. 
+
+--- miss-spelled, metric, Temp
+U> What is the temperature in Pariss France in farenheit
+S> The temperature is * degrees.
+
+

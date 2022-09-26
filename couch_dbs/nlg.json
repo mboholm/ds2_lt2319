@@ -7,4 +7,9 @@
         "match": "another(semantic_expression_of_a_move)",
         "utterance": "another utterance"
     }
+
+    {
+        "match": "answer(temperature_to_get(&individual))",
+        "utterance": "The temperature is &individual degrees."
+    }
 ]

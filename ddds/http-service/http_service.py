@@ -2,6 +2,8 @@
 
 import json
 
+import requests # MB
+
 from flask import Flask, request
 from jinja2 import Environment
 
@@ -149,3 +151,43 @@ def action_success_response():
         mimetype='application/json'
     )
     return response
+
+def switch(facts, X_for_search): # by MB
+    if "from_rasa" in facts[X_for_search]["value"]:
+        return facts[X_for_search]["grammar_entry"]
+    else:
+        return facts[X_for_search]["value"]
+
+@app.route("/get_temp", methods=['POST'])
+def get_temp(): # by MB
+    payload = request.get_json() # MB. Note: Externally defined variable!
+    facts   = payload["context"]["facts"]
+    city    = switch(facts, "city_for_search")
+    country = switch(facts, "country_for_search")
+
+    if "unit_for_search" in facts:
+        unit = switch(facts, "unit_for_search")       
+    else:
+        unit = "metric" # MB. ...or "standard"
+
+    api_key = "8b9880be7d1dcfe6e8886ad128f67c15" # MB
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{country}&units={unit}&appid={api_key}"
+    response = requests.get(url)
+    data = response.json()
+    temp = data["main"]["temp"]
+    temp = str(int(temp))
+    return query_response(value=temp, grammar_entry=None)
+
+@app.route("/get_weather", methods=['POST'])
+def get_weather(): # by MB
+    payload = request.get_json() # Externally defined variable!
+    facts   = payload["context"]["facts"]
+    city    = switch(facts, "city_for_search")
+    country = switch(facts, "country_for_search")    
+
+    api_key = "8b9880be7d1dcfe6e8886ad128f67c15"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{country}&appid={api_key}" #MB. No need of units for the weather (default respone i Kalvin)
+    response = requests.get(url)
+    data = response.json()
+    weather = data["weather"][0]["description"]
+    return query_response(value=weather, grammar_entry=None)

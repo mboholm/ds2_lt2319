@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<domain name="Lab2WeatherAppDomain" is_super_domain="true">
+  <goal type="perform" action="top">
+    <plan>
+      <forget_all/>
+      <findout type="alt_question">
+          <alt>
+              <resolve type="wh_question" predicate="temperature_to_get"/>
+          </alt>
+          <alt>
+              <resolve type="wh_question" predicate="weather_to_get"/>
+          </alt>
+      </findout>  
+    </plan>
+  </goal>
+
+  <goal type="resolve" question_type="wh_question" predicate="temperature_to_get">
+    <plan>
+      <findout type="wh_question" predicate="city_for_search"/>
+      <findout type="wh_question" predicate="country_for_search"/>
+      <bind type="wh_question" predicate="unit_for_search"/>
+      <invoke_service_query predicate="temperature_to_get" type="wh_question"/>
+    </plan>
+  </goal>
+
+  <goal type="resolve" question_type="wh_question" predicate="weather_to_get">
+    <plan>
+      <findout type="wh_question" predicate="city_for_search"/>
+      <findout type="wh_question" predicate="country_for_search"/>
+      <invoke_service_query predicate="weather_to_get" type="wh_question"/>
+    </plan>
+  </goal>
+
+
+<!-- Do not use <forget> tag -->
+
+</domain>

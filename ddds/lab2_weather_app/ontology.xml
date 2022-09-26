@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ontology name="Lab2WeatherAppOntology">
+
+	<!-- Sorts of individuals (to talk about) -->
+	<sort name="city" dynamic="true"/>
+	<sort name="country" dynamic="true"/>
+	<sort name="unit_of_measurement" dynamic="true"/>
+	<!-- <sort name="temperature" dynamic="True"/> -->
+	<!-- Do I not need the sort temperature? Note: in call-context, phone numbers need not be "talked about", but here temperatures will be talked about. See comment below. -->
+
+	<predicate name="city_for_search" sort="city"/>
+	<predicate name="country_for_search" sort="country"/>
+	<predicate name="temperature_to_get" sort="string"/>
+	<predicate name="weather_to_get" sort="string"/>
+	<predicate name="unit_for_search" sort="unit_of_measurement"/>
+	<!-- The attrib sort of a <predicate> is the sort of the predicate's argument -->
+	<!-- As suggested in assignment to treat predicate temperature this way -->
+
+	<individual name="london" sort="city"/>
+	<individual name="birmingham" sort="city"/>
+	<individual name="uk" sort="country"/>
+	<individual name="paris" sort="city"/>
+	<individual name="marseille" sort="city"/>
+	<individual name="france" sort="country"/>
+
+	<individual name="imperial" sort="unit_of_measurement"/>
+	<individual name="metric" sort="unit_of_measurement"/>
+	<individual name="standard" sort="unit_of_measurement"/>
+
+</ontology>

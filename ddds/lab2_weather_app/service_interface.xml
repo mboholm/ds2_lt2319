@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service_interface>
+
+	<query name="temperature_to_get">
+		<parameters>
+			<parameter predicate="city_for_search" format="grammar_entry"/>
+			<parameter predicate="country_for_search" format="grammar_entry"/>
+			<parameter predicate="unit_for_search" format="grammar_entry" optional="true"/>
+		</parameters>
+		<target>
+			<http endpoint="http://ddds-http-service/get_temp"/>
+			<!-- What to specify here? What is the path? To what? -->
+			<!-- In demo: "http://ddds-http-service/phone_number" -->
+			<!-- In docs: "http://climate-http-service/current_temperature" -->
+			<!-- Ergo (?): the name of the function in `http_service.py`?? -->
+		</target>
+	</query>
+
+	<query name="weather_to_get">
+		<parameters>
+			<parameter predicate="city_for_search" format="grammar_entry"/>
+			<parameter predicate="country_for_search" format="grammar_entry"/>
+		</parameters>
+		<target>
+			<http endpoint="http://ddds-http-service/get_weather"/>
+		</target>
+	</query>	
+
+</service_interface>

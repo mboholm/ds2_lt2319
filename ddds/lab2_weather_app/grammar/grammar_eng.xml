@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar>
+
+  <action name="top">
+    <one-of>
+      <item>main menu</item>
+      <item>top</item>
+      <item>beginning</item>
+      <item>cancel</item>
+      <item>forget it</item>
+      <item>never mind</item>
+      <item>abort</item>
+    </one-of>
+  </action>
+
+  <action name="up">
+    <one-of>
+      <item>up</item>
+      <item>back</item>
+      <item>go back</item>
+    </one-of>
+  </action>
+
+  <!-- New code from here: -->
+
+  <greeting>Hello! What would you like to do?</greeting>
+
+  <individual name="london">
+    <one-of>
+      <item>London</item>
+      <item>london</item>
+      <item>the capital of England</item>
+    </one-of>
+  </individual>
+
+  <individual name="birmingham">
+    <one-of>
+      <item>Birmingham</item>
+      <item>birmingham</item>
+      <item>England's second largest city</item>
+    </one-of>
+  </individual>
+
+  <individual name="paris">
+    <one-of>
+      <item>Paris</item>
+      <item>paris</item>
+      <item>the capital of France</item>
+    </one-of>
+  </individual> 
+
+  <individual name="marseille">
+    <one-of>
+      <item>Marseille</item>
+      <item>marseille</item>
+    </one-of>
+  </individual> 
+
+  <individual name="uk">
+    <one-of>
+      <item>UK</item>
+      <item>United Kingdom</item>
+      <item>Great Britain</item>
+      <item>Britain</item>
+    </one-of>
+  </individual>
+  <!-- Leaving any political and geographical ignorance aside. -->  
+
+  <individual name="france">France</individual>
+
+  <individual name="imperial">
+    <one-of>
+      <item>farenheit</item>
+      <item>imperial measure</item>
+    </one-of>
+  </individual>  
+
+  <individual name="standard">
+    <one-of>
+      <item>kalvin</item>
+      <item>standard measure</item>
+    </one-of>
+  </individual>
+
+  <individual name="metric">
+    <one-of>
+      <item>celsius</item>
+      <item>metric measure</item>
+    </one-of>
+  </individual>         
+
+  <answer speaker="system" predicate="temperature_to_get">
+    The temperature is <slot predicate="temperature_to_get"/> degrees
+  </answer>
+  <!-- No <one-of> here... talked with Jose --> 
+  <!-- Adding more slots for further sophistication? "The temperature in London, UK is * degrees" -->
+
+  <answer speaker="system" predicate="weather_to_get">
+    The weather is <slot predicate="weather_to_get"/>
+  </answer>
+
+  <answer speaker="user">
+    <one-of>
+      <item><slot predicate="city_for_search"/></item>
+      <item><slot predicate="city_for_search"/> <slot predicate="country_for_search"/></item>
+      <item><slot predicate="country_for_search"/></item>
+      <item><slot predicate="country_for_search"/></item>
+    </one-of>
+  </answer>  
+  <!-- No predicate for answers by users <answer speaker="user"> -->
+
+  <question speaker="all" predicate="temperature_to_get">temperature</question>
+  <!-- ?? As instructed -->
+
+  <question speaker="all" predicate="weather_to_get">weather</question>
+  <!-- ?? As instructed -->  
+
+  <question speaker="user" predicate="temperature_to_get" type="wh_question">
+    <one-of>
+      <item>What is the temperature</item>
+      <item>What is the temperature in <slot predicate="city_for_search"/></item>
+      <item>What is the temperature in <slot predicate="city_for_search"/> <slot predicate="country_for_search"/></item>
+      <item>What is the temperature in <slot predicate="city_for_search"/> <slot predicate="country_for_search"/> in <slot predicate="unit_for_search"/></item>      
+      <item>Tell me the temperature</item>
+      <item>Can you tell me about the temperature</item>
+      <item>I want to know the temperature</item>
+    </one-of>
+  </question>
+  <!-- Note additional forms of other- and over-answering -->
+  <!-- Add more! -->
+
+  <question speaker="user" predicate="weather_to_get" type="wh_question">
+    <one-of>
+      <item>What is the weather</item>
+      <item>What is the weather in <slot predicate="city_for_search"/></item>
+      <item>What is the weather in <slot predicate="city_for_search"/> <slot predicate="country_for_search"/></item>
+      <item>Tell me the weather</item>
+      <item>Can you tell me the weather</item>
+      <item>I want to know the weather</item>
+    </one-of>
+  </question>  
+
+  <question speaker="system" predicate="city_for_search" type="wh_question">
+    What city
+  </question>  
+
+  <question speaker="system" predicate="country_for_search" type="wh_question">
+    What country
+  </question>  
+  <!-- How to get more flexibility and therby pass more natural interaction tests; e.g. S: What city? U: UK. S: OK. What city in the UK? ... -->
+
+
+
+
+</grammar>
