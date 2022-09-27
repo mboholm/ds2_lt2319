@@ -1,5 +1,5 @@
 {
-    "active_ddd": "lab2_weather_app",
+    "active_ddd": "lab3_cooking_app",
     "asr": "none",
     "confidence_prediction_thresholds": {
         "ACKNOWLEDGE": 0.8,
@@ -12,7 +12,8 @@
         "TRUST": 0.3
     },
     "ddds": [
-        "lab2_weather_app"
+        "lab2_weather_app",
+        "lab3_cooking_app"
     ],
     "inactive_seconds_allowed": 7200,
     "long_timeout": 5.0,
