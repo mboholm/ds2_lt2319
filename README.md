@@ -8,19 +8,18 @@ For reasons suggested by José, `rasa` was trained with data generated without `
 $ tala generate rasa lab2_weather_app eng --lookup-entries city:world-cities.csv --lookup-entries country:countries.csv -x string > ../rasa-nlu/training-data-eng.yml 
 ```
 ## A note on interaction tests
-13 interaction design where designed for Lab 2, representing *main menu*, *incremental*, *one-shot*, *over-answering*, *other-answering*, and *answer-revision*; versions for requesting *temperature* and *weather*; and *polite/uncertainty*, *reordered* and *miss-spelled*. The last three "conditions" where design to test `rasa` trained NLU. They do not strictly follow forms in the `grammar.xml`:
+12 interaction design where designed for Lab 2, representing *main menu*, *incremental*, *one-shot*, *over-answering*, *other-answering*, and *answer-revision*; versions for requesting *temperature* and *weather*; and *polite/uncertainty*, and *reordered*. The last two "conditions" where design to test `rasa` trained NLU. They do not strictly follow forms in the `grammar.xml`:
 
 -	*polite/uncertainty*, insert words for politeness and uncertainty in forms of the grammar
 -	*reordered*, change the order of components compared with forms in the grammar
--	*miss-spelled* words (not considered in the grammar)
 
 ### Interaction tests using `http://tdm/interact`
-As expected, when run with `http://tdm/interact`, all tests are completed, except the three last ones designed for testing the `rasa` NLU (*polite/uncertainty*, *reordered* and *miss-spelled*). 
+As expected, when run with `http://tdm/interact`, all tests are completed, except the last two ones designed for testing the `rasa` NLU (*polite/uncertainty*, and *reordered*). 
 ### Interaction tests using `http://pipeline/interact`
 Run with `http://pipeline/interact` there are some problems. The desired output of the http-service is forwarded to the dialogue, but there are troubles with producing the expected uttearnce. 
 
 #### Episode 1
-First, the problem for all the tests is illustrated by the following example.
+In the first episode, the problem for all the tests is illustrated by the following example.
 
 ```
 expected:
@@ -46,7 +45,8 @@ As proposed by José, I have:
     }
 ]
 ```
-2. I have opened a port for the database: `$ kubectl port-forward svc/couchdb-talkamatic-svc-couchdb 5984 -n couchdb-talkamatic &`
+2. I have opened a port for the database: 
+```$ kubectl port-forward svc/couchdb-talkamatic-svc-couchdb 5984 -n couchdb-talkamatic &```
 3. I have updated the database:
 ```
 $ python3 update_couch_db.py nlg gusbohom --couchdb couchdb-talkamatic
@@ -57,7 +57,7 @@ Docs to post in nlg database
 ```
 
 #### Episode 2
-The above solution solved some of the test - all "temperature" tests. However, another problem has appeared. Not only `answer(temperature_to_get(&individual))` moves are uttered as `"The temperature is &individual degrees."`, also the `answer(weather_to_get(&individual))` moves are. All three "weather" tests fail:
+The above solution solved some of the tests, namely the "temperature" tests. However, another problem has appeared. Not only `answer(temperature_to_get(&individual))` moves are uttered as `"The temperature is &individual degrees."`, also the `answer(weather_to_get(&individual))` moves are. All three "weather" tests fail:
 ```
 ======================================================================
 Failure in test 'incremental, Weather'
@@ -94,4 +94,4 @@ but got:
 
 ----------------------------------------------------------------------
 ```
-At the moment I leave this problem unsolved. 
+At the moment, I leave this problem unsolved. 
