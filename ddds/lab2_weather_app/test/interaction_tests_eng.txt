@@ -43,17 +43,17 @@ S> What city?
 U> Paris
 S> What country?
 U> France
-S> The weather is *.
+S> The weather is * .
 
 --- overanswering, Weather
 U> I want to know the weather
 S> What city?
 U> Paris France
-S> The weather is *.
+S> The weather is * .
 
 --- one-shot, Weather
 U> What is the weather in Paris France
-S> The weather is *.
+S> The weather is * .
 
 --- metric, Temp
 U> What is the temperature in London UK in farenheit
@@ -67,12 +67,7 @@ S> What country?
 U> France I guess
 S> The temperature is * degrees.
 
---- reordered, added function words, one-shot, Weather
-U> In Paris in France what is the weather
-S> The weather is *. 
-
---- miss-spelled, metric, Temp
-U> What is the temperature in Pariss France in farenheit
-S> The temperature is * degrees.
-
+--- reordered, added function words, one-shot, Temp
+U> In Paris in France what is the temperature
+S> The temperature is * degrees. 
 

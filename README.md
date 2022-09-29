@@ -17,7 +17,11 @@ $ tala generate rasa lab2_weather_app eng --lookup-entries city:world-cities.csv
 ### Interaction tests using `http://tdm/interact`
 As expected, when run with `http://tdm/interact`, all tests are completed, except the three last ones designed for testing the `rasa` NLU (*polite/uncertainty*, *reordered* and *miss-spelled*). 
 ### Interaction tests using `http://pipeline/interact`
-Run with `http://tdm/interact` the utterances are not completed as expected. However, the error is systematic. Consider, for example: 
+Run with `http://pipeline/interact` there are some problems. The desired output of the http-service is forwarded to the dialogue, but there are troubles with producing the expected uttearnce. 
+
+#### Episode 1
+First, the problem for all the tests is illustrated by the following example.
+
 ```
 expected:
   S> The temperature is * degrees.
@@ -25,4 +29,69 @@ expected:
 but got:
   S> 29.
 ```
-The system does not pass the value from the http-service to the template for system answer ("The temperature is $TEMPERATURE degrees"), but only returns the value. All tests fail in this manner. This error is ignored, as suggested by José, on the Discord channel for the course. 
+Here, it the value from the http-service is sent to the dialogue, but is not correctly embedded in the utterance. In the Discord channel for the course, José suggested that this might be some bug that could be ignored, for now. However, he suggested a solution.
+
+#### Proposed solution 
+As proposed by José, I have:
+1. Updated the `nlg.json` file:
+```
+[
+    {
+        "match": "answer(temperature_to_get(&individual))",
+        "utterance": "The temperature is &individual degrees."
+    },
+    {
+        "match": "answer(weather_to_get(&individual))",
+        "utterance": "The weather is &individual."
+    }
+]
+```
+2. I have opened a port for the database: `$ kubectl port-forward svc/couchdb-talkamatic-svc-couchdb 5984 -n couchdb-talkamatic &`
+3. I have updated the database:
+```
+$ python3 update_couch_db.py nlg gusbohom --couchdb couchdb-talkamatic
+Docs to post in nlg database
+  Docs to add: ['answer(temperature_to_get(&individual))', 'answer(weather_to_get(&individual))']
+  Docs to delete: []
+  Docs to update: []
+```
+
+#### Episode 2
+The above solution solved some of the test - all "temperature" tests. However, another problem has appeared. Not only `answer(temperature_to_get(&individual))` moves are uttered as `"The temperature is &individual degrees."`, also the `answer(weather_to_get(&individual))` moves are. All three "weather" tests fail:
+```
+======================================================================
+Failure in test 'incremental, Weather'
+----------------------------------------------------------------------
+On line 46 of /okteto/lab2_weather_app/test/interaction_tests_eng.txt,
+
+expected:
+  S> The weather is * .
+
+but got:
+  S> The temperature is clear sky degrees.
+
+======================================================================
+Failure in test 'overanswering, Weather'
+----------------------------------------------------------------------
+On line 52 of /okteto/lab2_weather_app/test/interaction_tests_eng.txt,
+
+expected:
+  S> The weather is * .
+
+but got:
+  S> The temperature is clear sky degrees.
+
+======================================================================
+Failure in test 'one-shot, Weather'
+----------------------------------------------------------------------
+On line 56 of /okteto/lab2_weather_app/test/interaction_tests_eng.txt,
+
+expected:
+  S> The weather is * .
+
+but got:
+  S> The temperature is clear sky degrees.
+
+----------------------------------------------------------------------
+```
+At the moment I leave this problem unsolved. 
