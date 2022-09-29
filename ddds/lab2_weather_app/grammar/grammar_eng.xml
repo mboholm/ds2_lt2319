@@ -104,7 +104,6 @@
       <item><slot predicate="city_for_search"/></item>
       <item><slot predicate="city_for_search"/> <slot predicate="country_for_search"/></item>
       <item><slot predicate="country_for_search"/></item>
-      <item><slot predicate="country_for_search"/></item>
     </one-of>
   </answer>  
   <!-- No predicate for answers by users <answer speaker="user"> -->
